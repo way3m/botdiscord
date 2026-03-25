@@ -438,6 +438,7 @@ const server = http.createServer((req, res) => {
 
 server.listen(port, () => {
   console.log(`Serveur web actif sur le port ${port}`);
+  console.log(`Diagnostic TOKEN: present=${Boolean(process.env.TOKEN)} length=${process.env.TOKEN ? process.env.TOKEN.length : 0}`);
 });
 
 client.on('guildMemberAdd', async member => {
@@ -1379,6 +1380,7 @@ if (!process.env.TOKEN) {
   process.exit(1);
 }
 
+console.log('Tentative de connexion a Discord...');
 client.login(process.env.TOKEN).catch(error => {
   console.error('Erreur lors de la connexion du bot a Discord:', error);
 });

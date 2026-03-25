@@ -425,6 +425,34 @@ client.on('warn', warning => {
   console.warn('Avertissement Discord:', warning);
 });
 
+client.on('debug', debug => {
+  if (
+    debug.includes('Provided token') ||
+    debug.includes('Preparing to connect') ||
+    debug.includes('Gateway') ||
+    debug.includes('Heartbeat') ||
+    debug.includes('Session')
+  ) {
+    console.log('Debug Discord:', debug);
+  }
+});
+
+client.on('shardReady', shardId => {
+  console.log(`Shard prete: ${shardId}`);
+});
+
+client.on('shardDisconnect', (event, shardId) => {
+  console.error(`Shard deconnectee: ${shardId} code=${event.code}`);
+});
+
+client.on('shardReconnecting', shardId => {
+  console.warn(`Shard en reconnexion: ${shardId}`);
+});
+
+client.on('shardResume', (replayedEvents, shardId) => {
+  console.log(`Shard resumee: ${shardId} events=${replayedEvents}`);
+});
+
 const server = http.createServer((req, res) => {
   if (req.url === '/health') {
     res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });

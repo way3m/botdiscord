@@ -73,7 +73,6 @@ const slashCommands = [
       option.setName('raison').setDescription('La raison du ticket').setRequired(false)
     )
 ].map(command => command.toJSON());
-
 function ensureJsonFile(filePath, defaultValue) {
   if (!fs.existsSync(dataDir)) {
     fs.mkdirSync(dataDir, { recursive: true });
@@ -601,7 +600,6 @@ client.on('interactionCreate', async interaction => {
     }
 
     if (!interaction.isButton()) return;
-
     if (interaction.customId.startsWith('ticket_open_')) {
       if (!interaction.guild) {
         await interaction.reply({ embeds: [errorEmbed('Cette action doit etre utilisee dans un serveur.')], ephemeral: true });

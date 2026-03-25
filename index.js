@@ -413,6 +413,18 @@ client.once('clientReady', () => {
     .catch(error => console.error('Erreur de synchronisation des slash commands:', error));
 });
 
+client.on('error', error => {
+  console.error('Erreur client Discord:', error);
+});
+
+client.on('shardError', error => {
+  console.error('Erreur shard Discord:', error);
+});
+
+client.on('warn', warning => {
+  console.warn('Avertissement Discord:', warning);
+});
+
 const server = http.createServer((req, res) => {
   if (req.url === '/health') {
     res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
@@ -1367,4 +1379,6 @@ if (!process.env.TOKEN) {
   process.exit(1);
 }
 
-client.login(process.env.TOKEN);
+client.login(process.env.TOKEN).catch(error => {
+  console.error('Erreur lors de la connexion du bot a Discord:', error);
+});
